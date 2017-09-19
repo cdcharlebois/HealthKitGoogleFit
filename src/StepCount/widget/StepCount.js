@@ -40,10 +40,10 @@ define([
 
         update: function(obj, callback) {
             logger.debug(this.id + ".update");
+            this._contextObj = obj;
             this._updateHealthData();
             this.interval = setInterval(lang.hitch(this, this._updateHealthData), 5000);
 
-            this._contextObj = obj;
             this._updateRendering(callback);
         },
 
@@ -56,6 +56,7 @@ define([
                     this.countTwoDaysAgo.innerHTML = data[0].value
                     this.countYesterday.innerHTML = data[1].value
                     this.countToday.innerHTML = data[2].value
+                    this._contextObj.set(this.attrStepsToday, data[2].value)
                     console.log(data);
                 }))
                 .catch(function(error) {
